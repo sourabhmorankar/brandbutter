@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read/write access for all documents during testing
+    // WARNING: These rules are insecure and should NOT be used in production
+    match /{document=**} {
+      allow read, write: if true;
+    }
+    
+    // Production-ready rules (commented out during testing)
+    // Uncomment and modify these rules when moving to production
+    
+    // match /users/{userId} {
+    //   // Allow users to read and update their own profile
+    //   allow read, update: if request.auth != null && request.auth.uid == userId;
+    //   // Only allow creation if the user ID matches the authenticated user
+    //   allow create: if request.auth != null && request.auth.uid == userId && request.resource.data.userId == userId;
+    // }
+    
+    // match /projects/{projectId} {
+    //   // Allow authenticated users to read projects
+    //   allow read: if request.auth != null;
+    //   // Allow project owners to update and delete their projects
+    //   allow update, delete: if request.auth != null && resource.data.ownerId == request.auth.uid;
+    //   // Allow authenticated users to create projects
+    //   allow create: if request.auth != null && request.resource.data.ownerId == request.auth.uid;
+    // }
+  }
+} 
